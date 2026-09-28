@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "TOPIT"
+description = "A premium board exam preparation ecosystem for Indian school students, connecting learning, practice, testing, analytics, AI guidance, revision, and board intelligence in one responsive platform."
+version = "1.0.0"
+id = "artifacts/topit"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22997
+
+[services.development]
+run = "pnpm --filter @workspace/topit run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/topit", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/topit/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22997"
+BASE_PATH = "/"
